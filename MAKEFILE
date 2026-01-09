@@ -1,0 +1,5 @@
+load-dev:
+	k3d image import webapi:latest -c dev
+
+load-pro:
+	k3d image import webapi:latest -c pro
