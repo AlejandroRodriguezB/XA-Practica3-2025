@@ -1,0 +1,26 @@
+image:
+  repository: redis
+  pullPolicy: IfNotPresent
+  tag: "8"
+
+service:
+  type: ClusterIP
+  port: 6379
+
+volumes: []
+  # - name: foo
+  #   secret:
+  #     secretName: mysecret
+  #     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+  # - name: foo
+  #   mountPath: "/etc/foo"
+  #   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
