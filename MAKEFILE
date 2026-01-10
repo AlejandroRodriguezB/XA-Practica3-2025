@@ -3,3 +3,17 @@ load-dev:
 
 load-pro:
 	k3d image import webapi:latest -c pro
+
+dev:
+	kubectl config use-context k3d-dev
+
+pro:
+	kubectl config use-context k3d-pro
+
+setup-dev:
+	kubectl config use-context k3d-dev
+	helm upgrade --install postgres helm/postgres --namespace dev -f helm/postgres/values.yaml -f helm/postgres/values-secret.yaml
+
+setup-pro:
+	kubectl config use-context k3d-pro
+	helm upgrade --install postgres helm/postgres --namespace pro -f helm/postgres/values.yaml -f helm/postgres/values-secret.yaml
