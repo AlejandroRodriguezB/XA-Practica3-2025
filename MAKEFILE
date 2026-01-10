@@ -13,7 +13,9 @@ pro:
 setup-dev:
 	kubectl config use-context k3d-dev
 	helm upgrade --install postgres helm/postgres --namespace dev -f helm/postgres/values.yaml -f helm/postgres/values-secret.yaml
+	helm upgrade --install redis helm/redis -n dev -f helm/redis/values.yaml
 
 setup-pro:
 	kubectl config use-context k3d-pro
 	helm upgrade --install postgres helm/postgres --namespace pro -f helm/postgres/values.yaml -f helm/postgres/values-secret.yaml
+	helm upgrade --install redis helm/redis -n pro -f helm/redis/values.yaml

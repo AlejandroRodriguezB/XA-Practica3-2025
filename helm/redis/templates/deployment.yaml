@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "redis.fullname" . }}
+  name: redis
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ include "redis.name" . }}
+      app: redis
   template:
     metadata:
       labels:
-        app: {{ include "redis.name" . }}
+        app: redis
     spec:
       containers:
         - name: {{ .Chart.Name }}
