@@ -13,8 +13,12 @@ pro:
 setup-dev:
 	kubectl config use-context k3d-dev
 	helm upgrade --install postgres helm/postgres --namespace dev -f helm/postgres/values.yaml -f helm/postgres/values-secret.yaml
+	helm install minio helm/minio -n dev  -f helm/minio/values.yaml -f helm/minio/values-secret.yaml
+	# test kubectl port-forward svc/minio 9001:9001 -n dev
 
 setup-pro:
 	kubectl config use-context k3d-pro
 	helm upgrade --install postgres helm/postgres --namespace pro -f helm/postgres/values.yaml -f helm/postgres/values-secret.yaml
 	helm upgrade --install redis helm/redis -n pro -f helm/redis/values.yaml
+	helm upgrade --install minio helm/minio -n pro  -f helm/minio/values.yaml -f helm/minio/values-secret.yaml
+	# test kubectl port-forward svc/minio 9001:9001 -n pro
