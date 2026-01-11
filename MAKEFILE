@@ -6,17 +6,11 @@ create-dev-cluster:
 	kubectl create namespace monitoring
 
 create-pro-cluster:
-	k3d cluster create pro --agents 3 --port "9000:80@loadbalancer"
+	k3d cluster create pro --agents 3 --port "9000:80@loadbalancer" --k3s-arg "--disable=traefik@server:*"
 	kubectl config use-context k3d-pro
 	kubectl create namespace dev
 	kubectl create namespace pro
 	kubectl create namespace monitoring
-
-load-dev:
-	k3d image import webapi:latest -c dev
-
-load-pro:
-	k3d image import webapi:latest -c pro
 
 dev:
 	kubectl config use-context k3d-dev
