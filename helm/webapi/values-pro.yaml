@@ -1,0 +1,10 @@
+replicaCount: 4
+
+env:
+  aspnetcoreEnvironment: Production
+
+ingress:
+  host: webapi.pro.local
+
+redis:
+  enabled: true

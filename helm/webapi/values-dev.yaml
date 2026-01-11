@@ -1,0 +1,10 @@
+replicaCount: 2
+
+env:
+  aspnetcoreEnvironment: Development
+
+ingress:
+  host: webapi.dev.local
+
+redis:
+  enabled: false
