@@ -1,12 +1,12 @@
 create-dev-cluster:
-	k3d cluster create dev --agents 2 --port "80:80@loadbalancer"
+	k3d cluster create dev --agents 2 --port "5000:80@loadbalancer" --k3s-arg "--disable=traefik@server:*"
 	kubectl config use-context k3d-dev
 	kubectl create namespace dev
 	kubectl create namespace pro
 	kubectl create namespace monitoring
 
 create-pro-cluster:
-	k3d cluster create pro --agents 3 --port "8082:80@loadbalancer"
+	k3d cluster create pro --agents 3 --port "9000:80@loadbalancer"
 	kubectl config use-context k3d-pro
 	kubectl create namespace dev
 	kubectl create namespace pro
@@ -28,7 +28,7 @@ setup-dev:
 	kubectl config use-context k3d-dev
 	helm install postgres helm/postgres --namespace dev -f helm/postgres/values.yaml -f helm/postgres/values-secret.yaml
 	helm install minio helm/minio -n dev  -f helm/minio/values.yaml -f helm/minio/values-secret.yaml
-	helm install ingress-nginx ingress-nginx/ingress-nginx -n dev --set controller.service.type=ClusterIP --set controller.hostPort.enabled=true --set controller.hostPort.ports.http=80 --set controller.ingressClassResource.default=true	
+	helm install ingress-nginx ingress-nginx/ingress-nginx -n dev --set controller.service.type=LoadBalancer	
 	k3d image import webapi:latest -c dev
 	helm install webapi helm/webapi -n dev -f helm/webapi/values.yaml -f helm/webapi/values-dev.yaml -f helm/webapi/values-secret-dev.yaml
 
@@ -37,6 +37,6 @@ setup-pro:
 	helm upgrade --install postgres helm/postgres --namespace pro -f helm/postgres/values.yaml -f helm/postgres/values-secret.yaml
 	helm upgrade --install redis helm/redis -n pro -f helm/redis/values.yaml
 	helm upgrade --install minio helm/minio -n pro  -f helm/minio/values.yaml -f helm/minio/values-secret.yaml
-	helm install ingress-nginx ingress-nginx/ingress-nginx -n pro --set controller.service.type=ClusterIP --set controller.hostPort.enabled=true --set controller.hostPort.ports.http=80 --set controller.ingressClassResource.default=true
+	helm install ingress-nginx ingress-nginx/ingress-nginx -n pro --set controller.service.type=LoadBalancer
 	k3d image import webapi:latest -c pro
 	helm install webapi helm/webapi -n pro -f helm/webapi/values.yaml -f helm/webapi/values-pro.yaml -f helm/webapi/values-secret-pro.yaml

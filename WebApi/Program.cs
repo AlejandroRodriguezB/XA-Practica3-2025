@@ -38,7 +38,6 @@ using (var scope = app.Services.CreateScope())
     await minio.TryEnsureBucketAsync();
 }
 
-app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

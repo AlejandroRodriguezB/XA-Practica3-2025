@@ -26,8 +26,10 @@ spec:
           ports:
             - containerPort: {{ .Values.service.targetPort }}
           env:
-            - name: ASPNETCORE_ENVIRONMENT
-              value: {{ .Values.env.aspnetcoreEnvironment }}
+          - name: ASPNETCORE_URLS
+            value: http://+:8080
+          - name: ASPNETCORE_ENVIRONMENT
+            value: {{ .Values.env.aspnetcoreEnvironment }}
           envFrom:
             - secretRef:
                 name: webapi
@@ -35,12 +37,13 @@ spec:
             httpGet:
               path: /
               port: 8080
-            initialDelaySeconds: 5
-            periodSeconds: 10
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            
           livenessProbe:
             httpGet:
               path: /
               port: 8080
-            initialDelaySeconds: 15
-            periodSeconds: 20
+            initialDelaySeconds: 30
+            periodSeconds: 10
           
