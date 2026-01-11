@@ -1,0 +1,21 @@
+server:
+  service:
+    type: ClusterIP
+
+  persistentVolume:
+    enabled: true
+    size: 5Gi
+
+serverFiles:
+  prometheus.yml:
+    scrape_configs:
+      - job_name: 'webapi'
+        metrics_path: /metrics
+        static_configs:
+          - targets:
+              - webapi.dev:80
+    rule_files:
+      - /etc/config/recording_rules.yml
+      - /etc/config/alerting_rules.yml
+      - /etc/config/rules
+      - /etc/config/alerts
