@@ -1,0 +1,49 @@
+admin:
+  existingSecret: grafana-admin
+  userKey: admin-user
+  passwordKey: admin-password
+
+service:
+  type: ClusterIP
+
+persistence:
+  enabled: true
+  size: 5Gi
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: http://prometheus-server
+        isDefault: true
+        editable: false
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: 'default'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        updateIntervalSeconds: 10
+        allowUiUpdates: true
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+grafana.ini:
+  auth.anonymous:
+    enabled: false
+
+extraVolumes:
+  - name: grafana-dashboard-webapi
+    configMap:
+      name: grafana-dashboard-webapi
+
+extraVolumeMounts:
+  - name: grafana-dashboard-webapi
+    mountPath: /var/lib/grafana/dashboards/default

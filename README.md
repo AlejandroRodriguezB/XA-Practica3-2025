@@ -7,10 +7,19 @@ kubectl port-forward -n monitoring svc/prometheus-server 9090:80
 
 http://localhost:9090/query 
 
+kubectl port-forward -n monitoring svc/grafana 3000:80
+
+http://localhost:3000
+
 kubectl port-forward svc/minio 9001:9001 -n dev/pro
 
 http://localhost:9001
 
+
 # Helm Repos
+
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 
 helm repo add grafana https://grafana.github.io/helm-charts
