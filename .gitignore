@@ -56,3 +56,5 @@ nunit-*.xml
 values-secret.yaml
 values-secret-dev.yaml
 values-secret-pro.yaml
+
+.vs/
