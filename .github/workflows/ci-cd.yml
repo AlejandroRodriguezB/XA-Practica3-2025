@@ -33,7 +33,7 @@ jobs:
       # =========================
       - name: Run tests
         run: |
-          dotnet test WebApi/WebApi.csproj --no-build --verbosity normal
+          dotnet test WebApi.Tests/WebApi.Tests.csproj --verbosity normal
 
       # =========================
       # STEP 3 — BUILD & PUSH
@@ -52,8 +52,9 @@ jobs:
       # =========================
       - name: Deploy instructions (simulated)
         run: |
-          echo "=== DEPLOY INSTRUCTIONS ==="
-          echo "make build"
-          echo "make push"
-          echo "kubectl apply -f k8s/dev/"
-          echo "kubectl rollout restart deployment webapi -n dev"
+          echo "=== DEPLOY DEV ==="
+          echo "make setup-dev"
+          echo "succesfully deployed to DEV environment"
+          echo "Pro deloyment approved"
+          echo "=== DEPLOY PRO ==="
+          echo "make setup-dev"
