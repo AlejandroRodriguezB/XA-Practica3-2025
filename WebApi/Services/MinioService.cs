@@ -43,7 +43,7 @@ namespace WebApi.Services
                     .WithSSL(false)
                     .Build();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError(e, "Error initializing MinIO client");
                 _client = null;

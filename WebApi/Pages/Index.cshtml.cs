@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Caching.Distributed;
-using Npgsql;
 using StackExchange.Redis;
 using System.Text.Json;
 using WebApi.Dto;
@@ -9,7 +7,8 @@ using WebApi.Services;
 
 namespace WebApi.Pages
 {
-    public class IndexModel(ILogger<IndexModel> logger, AppDbContext context, IConnectionMultiplexer? redis = null) : PageModel
+    public class IndexModel(ILogger<IndexModel> logger, AppDbContext context, IConnectionMultiplexer? redis = null)
+        : PageModel
     {
         private readonly ILogger<IndexModel> _logger = logger;
         private readonly AppDbContext _context = context;
@@ -17,8 +16,7 @@ namespace WebApi.Pages
 
         public List<Product> Products { get; set; } = [];
 
-        [BindProperty]
-        public Product NewProduct { get; set; } = new();
+        [BindProperty] public Product NewProduct { get; set; } = new();
 
         private const string CacheKey = "products:list";
 
@@ -54,7 +52,7 @@ namespace WebApi.Pages
                         return;
                     }
                 }
-            
+
                 Products = [.. _context.Products.OrderBy(p => p.Id)];
 
                 if (_redis is not null)
@@ -66,11 +64,13 @@ namespace WebApi.Pages
                         json,
                         TimeSpan.FromMinutes(5));
                 }
-
-            } catch(Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 _logger.LogError(ex, "Error getting index");
             }
         }
+
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid)
