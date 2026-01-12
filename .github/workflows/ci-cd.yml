@@ -40,7 +40,7 @@ jobs:
       # =========================
       - name: Build Docker image
         run: |
-          docker build -t webapi:ci .
+          docker build -t webapi:ci -f WebApi/Dockerfile WebApi
 
       - name: Simulate Docker push
         run: |
