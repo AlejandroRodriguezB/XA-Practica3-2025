@@ -22,7 +22,7 @@ namespace WebApi.Pages
 
         public string? InstanceName { get; set; }
 
-        public bool IsDbConnected { get; private set; } = false;
+        public bool IsDbConnected { get; private set; }
 
         public async Task OnGetAsync()
         {

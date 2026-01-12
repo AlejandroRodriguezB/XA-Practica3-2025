@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Minio;
 using Minio.DataModel.Args;
-using System;
-using System.Security.AccessControl;
 
 namespace WebApi.Services
 {
@@ -12,7 +9,7 @@ namespace WebApi.Services
         private readonly ILogger<MinioService> _logger;
         public readonly MinioClient? _client;
         private readonly string _bucket = "files";
-        private bool _bucketEnsured = false;
+        private bool _bucketEnsured;
         private const string ObjectName = "logo.png";
 
         public bool Enabled => _client != null;
