@@ -10,3 +10,7 @@ http://localhost:9090/query
 kubectl port-forward svc/minio 9001:9001 -n dev/pro
 
 http://localhost:9001
+
+# Helm Repos
+
+helm repo add grafana https://grafana.github.io/helm-charts

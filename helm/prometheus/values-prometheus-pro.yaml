@@ -19,3 +19,14 @@ serverFiles:
       - /etc/config/alerting_rules.yml
       - /etc/config/rules
       - /etc/config/alerts
+  alerting_rules.yml:
+    groups:
+      - name: webapi-alerts
+        rules:
+          - alert: WebApiDown
+            expr: up{job="webapi"} == 0
+            for: 10s
+            labels:
+              severity: critical
+            annotations:
+              summary: "Web API appears to be down"
