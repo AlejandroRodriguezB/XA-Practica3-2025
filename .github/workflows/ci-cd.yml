@@ -31,9 +31,14 @@ jobs:
       # =========================
       # STEP 2 — TESTS
       # =========================
-      - name: Run tests
+      - name: Run tests (simulated environment)
+        env:
+          ASPNETCORE_ENVIRONMENT: Test
         run: |
-          dotnet test WebApi.Tests/WebApi.Tests.csproj --verbosity normal
+          dotnet test WebApi.Tests/WebApi.Tests.csproj \
+            --configuration Release \
+            --no-build \
+            --verbosity normal
 
       # =========================
       # STEP 3 — BUILD & PUSH
