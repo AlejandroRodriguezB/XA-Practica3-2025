@@ -120,7 +120,7 @@ En el repositorio de el proyecto https://github.com/AlejandroRodriguezB/XA-Pract
 
 Y los steps y resultado de los steps:
 
-![Github actions steps](media/GithubSteps.png)
+![Github actions steps](media/GithubActions.png)
 
 
 ## 4- Uso del makefile
