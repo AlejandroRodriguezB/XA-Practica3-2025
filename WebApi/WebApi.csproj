@@ -8,6 +8,7 @@
     <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:8.0</ContainerBaseImage>
     <UserSecretsId>50c27b30-7558-4dff-bc1a-d57ca7a446e7</UserSecretsId>
     <DockerfileContext>.</DockerfileContext>
+	  <PreserveCompilationContext>true</PreserveCompilationContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +21,7 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="8.2.1" />
     <PackageReference Include="StackExchange.Redis" Version="2.9.32" />
+	<PreserveCompilationContext>true</PreserveCompilationContext>
   </ItemGroup>
 
 </Project>
