@@ -14,31 +14,18 @@ builder.Services.AddDataProtection()
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-if (builder.Environment.IsEnvironment("Test"))
-{
-    builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseInMemoryDatabase("TestDb"));
-}
-else
-{
-    // Postgres config
-    builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
-}
+// Postgres config
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
+
 // Redis config
-if (builder.Environment.IsEnvironment("Test"))
+var redisUrl = builder.Configuration["Redis:Connection"];
+if (!string.IsNullOrEmpty(redisUrl))
 {
-    builder.Services.AddDistributedMemoryCache();
+    builder.Services.AddSingleton<IConnectionMultiplexer>(
+        ConnectionMultiplexer.Connect(redisUrl));
 }
-else
-{
-    var redisUrl = builder.Configuration["Redis:Connection"];
-    if (!string.IsNullOrEmpty(redisUrl))
-    {
-        builder.Services.AddSingleton<IConnectionMultiplexer>(
-            ConnectionMultiplexer.Connect(redisUrl));
-    }
-}
+
 // MinIO config
 builder.Services.AddSingleton<MinioService>();
 
