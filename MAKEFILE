@@ -12,6 +12,12 @@ create-pro-cluster:
 	kubectl create namespace pro
 	kubectl create namespace monitoring
 
+destroy-dev:
+	k3d cluster delete dev
+
+destroy-pro:
+	k3d cluster delete pro
+
 dev:
 	kubectl config use-context k3d-dev
 
@@ -21,24 +27,23 @@ pro:
 setup-dev:
 	kubectl config use-context k3d-dev
 	k3d image import webapi:latest -c dev
-	helm install postgres helm/postgres --namespace dev -f helm/postgres/values.yaml -f helm/postgres/values-secret.yaml
-	helm install minio helm/minio -n dev  -f helm/minio/values.yaml -f helm/minio/values-secret.yaml
-	helm install ingress-nginx ingress-nginx/ingress-nginx -n dev --set controller.service.type=LoadBalancer	
-	helm install prometheus prometheus-community/prometheus -n monitoring -f helm/prometheus/values-prometheus-dev.yaml
+	helm upgrade --install postgres helm/postgres --namespace dev -f helm/postgres/values.yaml -f helm/postgres/values-secret.yaml
+	helm upgrade --install minio helm/minio -n dev  -f helm/minio/values.yaml -f helm/minio/values-secret.yaml
+	helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx -n dev --set controller.service.type=LoadBalancer --wait --timeout 5m
+	helm upgrade --install prometheus prometheus-community/prometheus -n monitoring -f helm/prometheus/values-prometheus-dev.yaml
 	kubectl apply -f helm/grafana/values-secret.yaml
-	helm install grafana grafana/grafana -n monitoring -f helm/grafana/values.yaml
+	helm upgrade --install grafana grafana/grafana -n monitoring -f helm/grafana/values.yaml
 	kubectl apply -f helm/grafana/dashboard.yaml
-	helm install webapi helm/webapi -n dev -f helm/webapi/values.yaml -f helm/webapi/values-dev.yaml -f helm/webapi/values-secret-dev.yaml
-
+	helm upgrade --install webapi helm/webapi -n dev -f helm/webapi/values.yaml -f helm/webapi/values-dev.yaml -f helm/webapi/values-secret-dev.yaml
 setup-pro:
 	kubectl config use-context k3d-pro
 	k3d image import webapi:latest -c pro
 	helm upgrade --install postgres helm/postgres --namespace pro -f helm/postgres/values.yaml -f helm/postgres/values-secret.yaml
 	helm upgrade --install redis helm/redis -n pro -f helm/redis/values.yaml
 	helm upgrade --install minio helm/minio -n pro  -f helm/minio/values.yaml -f helm/minio/values-secret.yaml
-	helm install ingress-nginx ingress-nginx/ingress-nginx -n pro --set controller.service.type=LoadBalancer
-	helm install prometheus prometheus-community/prometheus -n monitoring -f helm/prometheus/values-prometheus-pro.yaml
+	helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx -n pro --set controller.service.type=LoadBalancer --wait --timeout 5m
+	helm upgrade --install prometheus prometheus-community/prometheus -n monitoring -f helm/prometheus/values-prometheus-pro.yaml
 	kubectl apply -f helm/grafana/values-secret.yaml
-	helm install grafana grafana/grafana -n monitoring -f helm/grafana/values.yaml
+	helm upgrade --install grafana grafana/grafana -n monitoring -f helm/grafana/values.yaml
 	kubectl apply -f helm/grafana/dashboard.yaml
-	helm install webapi helm/webapi -n pro -f helm/webapi/values.yaml -f helm/webapi/values-pro.yaml -f helm/webapi/values-secret-pro.yaml
+	helm upgrade --install webapi helm/webapi -n pro -f helm/webapi/values.yaml -f helm/webapi/values-pro.yaml -f helm/webapi/values-secret-pro.yaml

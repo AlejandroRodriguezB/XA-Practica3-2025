@@ -31,7 +31,7 @@ jobs:
       # =========================
       # STEP 2 — TESTS
       # =========================
-      - name: Run tests (simulated environment)
+      - name: Run tests (simulated)
         run: |
           echo "dotnet test WebApi.Tests/WebApi.Tests.csproj --configuration Release --verbosity normal"
           echo "Building test project in Test environment"
@@ -46,7 +46,7 @@ jobs:
         run: |
           docker build -t webapi:ci -f WebApi/Dockerfile WebApi
 
-      - name: Simulate Docker push
+      - name: Docker push (simulated)
         run: |
           echo "docker tag webapi:ci <dockerhub-user>/webapi:latest"
           echo "docker push <dockerhub-user>/webapi:latest"
