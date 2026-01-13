@@ -112,6 +112,16 @@ en http://localhost:9001 se podrá acceder:
 
 ![Img minio ui](media/MinioUi.png)
 
+### Github Actions:
+
+En el repositorio de el proyecto https://github.com/AlejandroRodriguezB/XA-Practica3-2025 podemos ver el resultado de las actions:
+
+![Github result](media/Github.png)
+
+Y los steps y resultado de los steps:
+
+![Github actions steps](media/GithubSteps.png)
+
 
 ## 4- Uso del makefile
 | Comando                   | Descripción             |
