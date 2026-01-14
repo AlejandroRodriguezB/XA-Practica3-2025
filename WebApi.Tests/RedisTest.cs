@@ -1,23 +1,26 @@
-﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
+﻿
+using StackExchange.Redis;
 
 namespace WebApi.Tests
 {
-    public class RedisTests(WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>>
+    public class RedisTests
     {
-        private readonly IDistributedCache _cache = factory.Services.GetRequiredService<IDistributedCache>();
-
         [Fact]
-        public async Task Cache_ShouldStoreAndRetrieveValue()
+        public async Task Redis_ShouldStoreAndRetrieveValue()
         {
-            await _cache.SetStringAsync("key", "value");
+            var redisConnection =
+                Environment.GetEnvironmentVariable("REDIS_CONNECTION");
 
-            var result = await _cache.GetStringAsync("key");
+            Assert.False(string.IsNullOrEmpty(redisConnection),
+                "REDIS_CONNECTION is not defined");
 
-            result.Should().Be("value");
+            var redis = await ConnectionMultiplexer.ConnectAsync(redisConnection);
+            var db = redis.GetDatabase();
+
+            await db.StringSetAsync("health-test", "ok");
+            var value = await db.StringGetAsync("health-test");
+
+            Assert.Equal("ok", value.ToString());
         }
     }
 }

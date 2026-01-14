@@ -35,6 +35,7 @@ setup-dev:
 	helm upgrade --install grafana grafana/grafana -n monitoring -f helm/grafana/values.yaml
 	kubectl apply -f helm/grafana/dashboard.yaml
 	helm upgrade --install webapi helm/webapi -n dev -f helm/webapi/values.yaml -f helm/webapi/values-dev.yaml -f helm/webapi/values-secret-dev.yaml
+	echo "helm test webapi -n dev --logs #Not working properly"
 
 setup-pro:
 	kubectl config use-context k3d-pro
@@ -48,3 +49,4 @@ setup-pro:
 	helm upgrade --install grafana grafana/grafana -n monitoring -f helm/grafana/values.yaml
 	kubectl apply -f helm/grafana/dashboard.yaml
 	helm upgrade --install webapi helm/webapi -n pro -f helm/webapi/values.yaml -f helm/webapi/values-pro.yaml -f helm/webapi/values-secret-pro.yaml
+	echo "helm test webapi -n pro --logs #Not working properly"

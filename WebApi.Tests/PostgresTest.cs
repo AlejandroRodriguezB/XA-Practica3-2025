@@ -1,22 +1,22 @@
-﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
-using WebApi.Services;
+﻿using Npgsql;
 
 namespace WebApi.Tests
 {
-    public class PostgresTests(WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>>
+    public class PostgresTests
     {
-        private readonly IServiceProvider _services = factory.Services;
-
         [Fact]
-        public void Database_ShouldBeReachable()
+        public async Task Database_ShouldBeReachable()
         {
-            using var scope = _services.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var connectionString =
+                Environment.GetEnvironmentVariable("POSTGRES_CONNECTION");
 
-            db.Database.CanConnect().Should().BeTrue();
+            Assert.False(string.IsNullOrEmpty(connectionString),
+                "POSTGRES_CONNECTION is not defined");
+
+            await using var conn = new NpgsqlConnection(connectionString);
+            await conn.OpenAsync();
+
+            Assert.Equal(System.Data.ConnectionState.Open, conn.State);
         }
     }
 }

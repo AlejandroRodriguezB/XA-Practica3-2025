@@ -1,20 +1,24 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Net;
 
 namespace WebApi.Tests
 {
-    public class HealthTests(WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>>
+    public class HealthTests
     {
-        private readonly HttpClient _client = factory.CreateClient();
 
         [Fact]
         public async Task HealthEndpoint_ShouldReturn200()
         {
-            var response = await _client.GetAsync("/health");
+            var baseUrl =
+                Environment.GetEnvironmentVariable("WEBAPI_BASE_URL");
 
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Assert.False(string.IsNullOrEmpty(baseUrl),
+                "WEBAPI_BASE_URL is not defined");
+
+            var client = new HttpClient { BaseAddress = new Uri(baseUrl) };
+
+            var response = await client.GetAsync("/health");
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }
 }

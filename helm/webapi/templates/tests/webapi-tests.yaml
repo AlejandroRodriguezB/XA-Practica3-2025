@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Chart.Name }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: tests
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - dotnet
+            - test
+            - WebApi.Tests/WebApi.Tests.csproj
+          env:
+            - name: WEBAPI_BASE_URL
+              value: "{{ .Values.env.aspnetcoreEnvironment }}"
+            - name: POSTGRES_CONNECTION
+              value: "Host={{ .Values.postgres.host }};Port={{ .Values.postgres.port }};Database={{ .Values.postgres.database }};Username={{ .Values.postgres.username }};Password={{ .Values.postgres.password }}"
+            - name: REDIS_CONNECTION
+              value: "{{ .Values.redis.connection }}"
