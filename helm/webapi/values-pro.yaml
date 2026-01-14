@@ -8,3 +8,6 @@ ingress:
 
 redis:
   enabled: true
+
+minio:
+  host: minio.pro.local

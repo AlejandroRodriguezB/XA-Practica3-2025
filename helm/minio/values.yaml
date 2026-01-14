@@ -10,5 +10,8 @@ service:
   port: 9000
   consolePort: 9001
 
+consoleService:
+  enabled: true
+
 buckets:
   - name: files
