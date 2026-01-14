@@ -23,10 +23,13 @@ helm repo add grafana https://grafana.github.io/helm-charts
 ### 1.1- Preparar variables de entorno
 Generar los siguentes archivos:
 ```
-env/dev/terraform.tfvars
-env/pro/terraform.tfvars
+helm\webapi\values-secret-dev.yaml
+helm\webapi\values-secret-pro.yaml
+helm\postgres\values-secret.yaml
+helm\minio\values-secret.yaml
+helm\grafana\values-secret.yaml
 ```
-De la misma carpeta deberías de tener un archivo variables.tf que son las variables a rellenar es las tfvars con los valores que consideres
+Rellenar con los campos correspondientes de su secrets .yaml menos grafana que ya debería de ser un fichero de secrets.
 ### 1.2- Desplegar entornos
 Para desplegar pro:
 ```
