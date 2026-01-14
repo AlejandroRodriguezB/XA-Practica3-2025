@@ -61,4 +61,5 @@ jobs:
           echo "succesfully deployed to DEV environment"
           echo "Pro deloyment approved"
           echo "=== DEPLOY PRO ==="
-          echo "make setup-dev"
+          echo "make setup-pro"
+          echo "succesfully deployed to PRO environment"
