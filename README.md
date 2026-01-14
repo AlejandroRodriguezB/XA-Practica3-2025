@@ -104,11 +104,7 @@ Desde la web se ha creado una página para insertar imágenes:
 Se actualiza en la cabecera:
 ![Img web header updated](media/HeaderUpdated.png)
 
-Y se puede ver desde la ui de minio si se ejecuta:
-```
-kubectl port-forward svc/minio 9001:9001 -n dev/pro
-```
-en http://localhost:9001 se podrá acceder:
+si se ha añadido el host para minio se podrá acceder via: http://minio.pro.local:9000/login o http://minio.dev.local:5000/login
 
 ![Img minio ui](media/MinioUi.png)
 
