@@ -31,6 +31,7 @@ helm\grafana\values-secret.yaml
 ```
 Rellenar con los campos correspondientes de su secrets .yaml menos grafana que ya debería de ser un fichero de secrets.
 ### 1.2- Desplegar entornos
+Generar imagen de el docker file con nombre webapi y tag latest
 Para desplegar pro:
 ```
 make create-pro-cluster
