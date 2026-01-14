@@ -6,7 +6,7 @@ namespace WebApi.Tests
     public class RedisTests
     {
         [Fact]
-        public async Task Redis_ShouldStoreAndRetrieveValue()
+        public async Task RedisTest()
         {
             var redisConnection =
                 Environment.GetEnvironmentVariable("REDIS_CONNECTION");

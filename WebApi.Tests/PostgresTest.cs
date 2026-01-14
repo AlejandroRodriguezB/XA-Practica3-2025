@@ -5,7 +5,7 @@ namespace WebApi.Tests
     public class PostgresTests
     {
         [Fact]
-        public async Task Database_ShouldBeReachable()
+        public async Task DatabaseTest()
         {
             var connectionString =
                 Environment.GetEnvironmentVariable("POSTGRES_CONNECTION");

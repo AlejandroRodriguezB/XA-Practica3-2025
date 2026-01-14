@@ -6,7 +6,7 @@ namespace WebApi.Tests
     {
 
         [Fact]
-        public async Task HealthEndpoint_ShouldReturn200()
+        public async Task HealthEndpoint()
         {
             var baseUrl =
                 Environment.GetEnvironmentVariable("WEBAPI_BASE_URL");
